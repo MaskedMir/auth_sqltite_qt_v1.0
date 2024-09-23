@@ -1,5 +1,4 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
 from check_db import *
 from des import *
 
@@ -17,7 +16,6 @@ class Interface(QtWidgets.QWidget):
         self.check_db = CheckThread()
         self.check_db.mysignal.connect(self.signal_handler)
 
-
     # Проверка правильности ввода
     def check_input(funct):
         def wrapper(self):
@@ -25,20 +23,18 @@ class Interface(QtWidgets.QWidget):
                 if len(line_edit.text()) == 0:
                     return
             funct(self)
-        return wrapper
 
+        return wrapper
 
     # Обработчик сигналов
     def signal_handler(self, value):
         QtWidgets.QMessageBox.about(self, 'Оповещение', value)
-
 
     @check_input
     def auth(self):
         name = self.ui.lineEdit.text()
         passw = self.ui.lineEdit_2.text()
         self.check_db.thr_login(name, passw)
-
 
     @check_input
     def reg(self):
@@ -47,9 +43,8 @@ class Interface(QtWidgets.QWidget):
         self.check_db.thr_register(name, passw)
 
 
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     mywin = Interface()
     mywin.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
